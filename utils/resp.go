@@ -7,11 +7,11 @@ import (
 )
 
 type H struct {
-	Code  int
-	Msg   string
-	Data  any
-	Rows  any
-	Total any
+	Code  int    // 状态码
+	Msg   string // 消息
+	Data  any    // 数据
+	Rows  any    // 分页数据
+	Total any    // 总数
 }
 
 func Resp(w http.ResponseWriter, code int, data any, msg string) {
@@ -56,10 +56,10 @@ func RespFail(w http.ResponseWriter, msg string) {
 	Resp(w, -1, nil, msg)
 }
 
-func RespOK(w http.ResponseWriter, data interface{}, msg string) {
+func RespOK(w http.ResponseWriter, data any, msg string) {
 	Resp(w, 0, data, msg)
 }
 
-func RespOKList(w http.ResponseWriter, data interface{}, total interface{}) {
+func RespOKList(w http.ResponseWriter, data any, total any) {
 	RespList(w, 0, data, total)
 }

@@ -7,7 +7,7 @@ import (
 	"encoding/hex"
 )
 
-// 小写
+// 小写格式的md5
 func Md5Encode(data string) string {
 	h := md5.New()
 	h.Write([]byte(data))
@@ -15,12 +15,12 @@ func Md5Encode(data string) string {
 	return hex.EncodeToString(tempStr)
 }
 
-// 大写
+// 大写格式的md5
 func MD5Encode_(data string) string {
 	return strings.ToUpper(Md5Encode(data))
 }
 
-// 加密
+// 加密：将明文密码 plainpwd和盐值salt拼接后计算 MD5 哈希
 func MakePassword(plainpwd, salt string) string {
 	return Md5Encode(plainpwd + salt)
 }

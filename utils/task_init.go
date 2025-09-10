@@ -1,39 +1,28 @@
-/**
-* @Auth:ShenZ
-* @Description:
-* @CreateDate:2022/06/15 17:27:35
- */
 package utils
 
-import (
-	"time"
-)
+import "time"
 
-type TimerFunc func(interface{}) bool
+type TimerFunc = func(any) bool
 
-/*
-*
-delay  首次延迟
-tick  间隔
-fun  定时执行的方法
-param  方法的参数
-*
-*/
-func Timer(delay, tick time.Duration, fun TimerFunc, param any) {
-	go func() {
-		if fun == nil {
+// 按一定间隔执行目标函数
+// delay首次延迟, tick间隔, fun定时执行的方法, param方法的参数
+func Timer(delay, tick time.Duration, method TimerFunc, param any) {
+	action := func() {
+		if method == nil {
 			return
 		}
 
-		t := time.NewTimer(delay)
+		timer := time.NewTimer(delay)
+		defer timer.Stop()
 
-		for range t.C {
-			if !fun(param) {
+		for range timer.C {
+			if !method(param) {
 				return
 			}
 
-			t.Reset(tick)
+			timer.Reset(tick)
 		}
+	}
 
-	}()
+	go action()
 }

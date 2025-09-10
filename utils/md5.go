@@ -1,15 +1,10 @@
-/**
-* @Auth:ShenZ
-* @Description:
-* @CreateDate:2022/06/15 16:27:35
- */
 package utils
 
 import (
+	"strings"
+
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
-	"strings"
 )
 
 // 小写
@@ -33,6 +28,5 @@ func MakePassword(plainpwd, salt string) string {
 // 解密
 func ValidPassword(plainpwd, salt string, password string) bool {
 	md := Md5Encode(plainpwd + salt)
-	fmt.Println(md + "				" + password)
 	return md == password
 }

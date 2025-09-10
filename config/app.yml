@@ -1,8 +1,3 @@
-#  mysql:
-#   dns:root:aNXvf&qYQ4NJTt7DPzPdGoGg@tcp(0.0.0.0:3306)/ginchat?parseTime=true
-
-# app.yml
-
 mysql:
   username: root
   password: 123

@@ -19,20 +19,21 @@ fun  定时执行的方法
 param  方法的参数
 *
 */
-func Timer(delay, tick time.Duration, fun TimerFunc, param interface{}) {
+func Timer(delay, tick time.Duration, fun TimerFunc, param any) {
 	go func() {
 		if fun == nil {
 			return
 		}
+
 		t := time.NewTimer(delay)
-		for {
-			select {
-			case <-t.C:
-				if fun(param) == false {
-					return
-				}
-				t.Reset(tick)
+
+		for range t.C {
+			if !fun(param) {
+				return
 			}
+
+			t.Reset(tick)
 		}
+
 	}()
 }

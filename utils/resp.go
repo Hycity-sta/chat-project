@@ -1,8 +1,3 @@
-/**
-* @Auth:ShenZ
-* @Description:
-* @CreateDate:2022/06/15 16:22:35
- */
 package utils
 
 import (
@@ -14,38 +9,46 @@ import (
 type H struct {
 	Code  int
 	Msg   string
-	Data  interface{}
-	Rows  interface{}
-	Total interface{}
+	Data  any
+	Rows  any
+	Total any
 }
 
-func Resp(w http.ResponseWriter, code int, data interface{}, msg string) {
+func Resp(w http.ResponseWriter, code int, data any, msg string) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+
 	h := H{
 		Code: code,
 		Data: data,
 		Msg:  msg,
 	}
+
 	ret, err := json.Marshal(h)
+
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	w.Write(ret)
 }
 
-func RespList(w http.ResponseWriter, code int, data interface{}, total interface{}) {
+func RespList(w http.ResponseWriter, code int, data any, total any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+
 	h := H{
 		Code:  code,
 		Rows:  data,
 		Total: total,
 	}
+
 	ret, err := json.Marshal(h)
+
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	w.Write(ret)
 }
 

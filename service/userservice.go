@@ -1,14 +1,10 @@
-/**
-* @Auth:ShenZ
-* @Description:
-* @CreateDate:2022/06/15 14:57:12
- */
 package service
 
 import (
-	"fmt"
 	"ginchat/models"
 	"ginchat/utils"
+
+	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
@@ -26,8 +22,7 @@ import (
 // @Success 200 {string} json{"code","message"}
 // @Router /user/getUserList [get]
 func GetUserList(c *gin.Context) {
-	data := make([]*models.UserBasic, 10)
-	data = models.GetUserList()
+	data := models.GetUserList()
 	c.JSON(200, gin.H{
 		"code":    0, //  0成功   -1失败
 		"message": "用户名已注册！",
@@ -211,12 +206,14 @@ func SendMsg(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
+
 	defer func(ws *websocket.Conn) {
 		err = ws.Close()
 		if err != nil {
 			fmt.Println(err)
 		}
 	}(ws)
+
 	MsgHandler(c, ws)
 }
 
@@ -252,11 +249,6 @@ func SendUserMsg(c *gin.Context) {
 func SearchFriends(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Request.FormValue("userId"))
 	users := models.SearchFriend(uint(id))
-	// c.JSON(200, gin.H{
-	// 	"code":    0, //  0成功   -1失败
-	// 	"message": "查询好友列表成功！",
-	// 	"data":    users,
-	// })
 	utils.RespOKList(c.Writer, users, len(users))
 }
 
@@ -319,8 +311,6 @@ func JoinGroups(c *gin.Context) {
 
 func FindByID(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))
-
-	//	name := c.Request.FormValue("name")
 	data := models.FindByID(uint(userId))
 	utils.RespOK(c.Writer, data, "ok")
 }

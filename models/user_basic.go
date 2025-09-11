@@ -6,10 +6,12 @@
 package models
 
 import (
-	"fmt"
 	"ginchat/utils"
-	"gorm.io/gorm"
+
+	"fmt"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type UserBasic struct {
@@ -30,14 +32,10 @@ type UserBasic struct {
 	DeviceInfo    string
 }
 
-func (table *UserBasic) TableName() string {
-	return "user_basic"
-}
-
 func GetUserList() []*UserBasic {
 	data := make([]*UserBasic, 10)
 	utils.DB.Find(&data)
-	for  _, v := range data {
+	for _, v := range data {
 		fmt.Println(v)
 	}
 	return data
@@ -82,7 +80,6 @@ func UpdateUser(user UserBasic) *gorm.DB {
 	return utils.DB.Model(&user).Updates(UserBasic{Name: user.Name, PassWord: user.PassWord, Phone: user.Phone, Email: user.Email, Avatar: user.Avatar})
 }
 
-// 查找某个用户
 func FindByID(id uint) UserBasic {
 	user := UserBasic{}
 	utils.DB.Where("id = ?", id).First(&user)

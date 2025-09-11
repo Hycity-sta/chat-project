@@ -1,8 +1,9 @@
 package models
 
 import (
-	"context"
 	"ginchat/utils"
+
+	"context"
 	"time"
 )
 

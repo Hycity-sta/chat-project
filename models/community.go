@@ -1,13 +1,10 @@
-/**
-* @Auth:ShenZ
-* @Description:
-* @CreateDate:2022/06/15 14:57:55
- */
 package models
 
 import (
-	"fmt"
 	"ginchat/utils"
+
+	"fmt"
+
 	"gorm.io/gorm"
 )
 
@@ -31,14 +28,17 @@ func CreateCommunity(community Community) (int, string) {
 	if len(community.Name) == 0 {
 		return -1, "群名称不能为空"
 	}
+
 	if community.OwnerId == 0 {
 		return -1, "请先登录"
 	}
+
 	if err := utils.DB.Create(&community).Error; err != nil {
 		fmt.Println(err)
 		tx.Rollback()
 		return -1, "建群失败"
 	}
+
 	contact := Contact{}
 	contact.OwnerId = community.OwnerId
 	contact.TargetId = community.ID
@@ -49,14 +49,15 @@ func CreateCommunity(community Community) (int, string) {
 	}
 
 	tx.Commit()
-	return 0, "建群成功"
 
+	return 0, "建群成功"
 }
 
 func LoadCommunity(ownerId uint) ([]*Community, string) {
 	contacts := make([]Contact, 0)
 	objIds := make([]uint64, 0)
 	utils.DB.Where("owner_id = ? and type=2", ownerId).Find(&contacts)
+	
 	for _, v := range contacts {
 		objIds = append(objIds, uint64(v.TargetId))
 	}

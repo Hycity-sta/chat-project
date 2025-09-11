@@ -341,7 +341,6 @@ func RedisMsg(userIdA int64, userIdB int64, start int64, end int64, isRev bool) 
 // 更新用户心跳
 func (node *Node) Heartbeat(currentTime uint64) {
 	node.HeartbeatTime = currentTime
-	return
 }
 
 // 清理超时连接
